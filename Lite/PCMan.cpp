@@ -67,7 +67,7 @@ BOOL CApp::InitInstance()
 		{
 			if (*m_lpCmdLine)
 			{
-				int l = strlen(m_lpCmdLine) + 1;
+				int l = _tcslen(m_lpCmdLine) + 1;
 				COPYDATASTRUCT d;
 				d.lpData = m_lpCmdLine;
 				d.cbData = l;
@@ -268,7 +268,7 @@ void CAboutDlg::OnReport()
 #ifdef	_COMBO_
 	((CMainFrame*)AfxGetApp()->m_pMainWnd)->view.ConnectWeb(tracker, TRUE);
 #else
-	ShellExecute(m_hWnd, "open", tracker.URL(), NULL, NULL, SW_SHOW);
+	ShellExecute(m_hWnd, TEXT("open"), tracker.URL(), NULL, NULL, SW_SHOW);
 #endif
 }
 
@@ -278,7 +278,7 @@ void CAboutDlg::OnWeb()
 #ifdef	_COMBO_
 	((CMainFrame*)AfxGetApp()->m_pMainWnd)->view.ConnectWeb(CAddress(web), TRUE);
 #else
-	ShellExecute(m_hWnd, "open", web, NULL, NULL, SW_SHOW);
+	ShellExecute(m_hWnd, TEXT("open"), web, NULL, NULL, SW_SHOW);
 #endif
 	web[20] = 'p';
 }
@@ -289,7 +289,7 @@ void CAboutDlg::OnWeb2()
 #ifdef	_COMBO_
 	((CMainFrame*)AfxGetApp()->m_pMainWnd)->view.ConnectWeb(url, TRUE);
 #else
-	ShellExecute(m_hWnd, "open", url.URL(), NULL, NULL, SW_SHOW);
+	ShellExecute(m_hWnd, TEXT("open"), url.URL(), NULL, NULL, SW_SHOW);
 #endif
 }
 
@@ -298,8 +298,8 @@ void CAboutDlg::OnHelp()
 #ifdef	_COMBO_
 	((CMainFrame*)AfxGetApp()->m_pMainWnd)->view.ConnectWeb(CAddress(web), TRUE);
 #else
-	if ((long)ShellExecute(m_hWnd, "open", AppPath + "pcman.html", NULL, NULL, SW_SHOWMAXIMIZED) <= 32)
-		ShellExecute(m_hWnd, "open", web, NULL, NULL, SW_SHOWMAXIMIZED);
+	if ((long)ShellExecute(m_hWnd, TEXT("open"), AppPath + "pcman.html", NULL, NULL, SW_SHOWMAXIMIZED) <= 32)
+		ShellExecute(m_hWnd, TEXT("open"), web, NULL, NULL, SW_SHOWMAXIMIZED);
 #endif
 }
 
@@ -331,9 +331,9 @@ BOOL CAboutDlg::OnInitDialog()
 	CDialog::OnInitDialog();
 
 	std::string buffer;
-	ReadFileAppend(AppPath + "story.txt", &buffer);
+	ReadFileAppend(AppPath + TEXT("story.txt"), &buffer);
 	buffer += _T("\r\n");
-	ReadFileAppend(AppPath + "OpenSourceLicenses.txt", &buffer);
+	ReadFileAppend(AppPath + TEXT("OpenSourceLicenses.txt"), &buffer);
 	buffer += _T("\r\n");
 	GetDlgItem(IDC_EDIT)->SetWindowText(buffer.c_str());
 

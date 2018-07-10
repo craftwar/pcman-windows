@@ -15,7 +15,8 @@
 class CAES : public CRijndael
 {
 public:
-	void EnterPassword(CString passwd);
+	// ANSI hack, CStringA
+	void EnterPassword(CStringA passwd);
 	inline BOOL IsInitialized(){	return m_bInit;	}
 	CAES();
 	virtual ~CAES();

@@ -39,7 +39,7 @@ void CConnectPage::InitWithAddress(const CString& addr)
 		int pos = address.ReverseFind(':');
 		if (pos != -1)
 		{
-			port = (unsigned short)atoi(address.Mid(pos + 1));
+			port = (unsigned short)_tstoi(address.Mid(pos + 1));
 			address = address.Left(pos);
 		}
 	}
@@ -53,7 +53,7 @@ CString CConnectPage::GetFormattedAddress() const
 	if (port == 23 || port <= 0)
 		return address;
 	CString buf;
-	buf.Format("%s:%d", LPCTSTR(address), port);
+	buf.Format(TEXT("%s:%d"), LPCTSTR(address), port);
 	return buf;
 }
 
@@ -117,7 +117,7 @@ void CConnectPage::OnAddressChanged()
 	if (addr.IsValid())
 	{
 		CString port_text;
-		port_text.Format("%d", addr.Port());
+		port_text.Format(TEXT("%d"), addr.Port());
 		port_field->SetWindowText(port_text);
 	}
 }

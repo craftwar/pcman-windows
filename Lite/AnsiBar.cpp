@@ -45,7 +45,7 @@ void CAnsiBar::OnBk()
 	mnu.CreatePopupMenu();
 	for (int i = 10;i < 18;i++)
 	{
-		mnu.AppendMenu(MF_OWNERDRAW, i, "");
+		mnu.AppendMenu(MF_OWNERDRAW, i, TEXT(""));
 	}
 	CRect rc;
 	::GetWindowRect(::GetDlgItem(m_hWnd, IDC_ANSIBAR_BK), rc);
@@ -67,7 +67,7 @@ void CAnsiBar::OnFg()
 	mnu.CreatePopupMenu();
 	for (int i = 10;i < 26;i++)
 	{
-		mnu.AppendMenu(MF_OWNERDRAW, i, "");
+		mnu.AppendMenu(MF_OWNERDRAW, i, TEXT(""));
 	}
 	CRect rc;
 	::GetWindowRect(::GetDlgItem(m_hWnd, IDC_ANSIBAR_FG), rc);
@@ -108,7 +108,7 @@ void CAnsiBar::OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct)
 			if (GetRValue(clr) <= 128 && GetGValue(clr) <= 128 && GetBValue(clr) <= 128)
 				txtclr = 0xffffff;
 			dc.SetTextColor(txtclr);
-			char txt[5];
+			TCHAR txt[5];
 			dc.DrawEdge(&lpDrawItemStruct->rcItem, lpDrawItemStruct->itemState&ODS_SELECTED ? EDGE_SUNKEN : EDGE_RAISED, BF_RECT);
 			::GetWindowText(lpDrawItemStruct->hwndItem, txt, 5);
 			dc.DrawText(txt, 4, &lpDrawItemStruct->rcItem, DT_VCENTER | DT_CENTER | DT_SINGLELINE);

@@ -26,7 +26,7 @@ public:
 	}
 	void Save(CString& value)
 	{
-		value.Format("%d,%d,%d", wID, fStyle, cx);
+		value.Format(TEXT("%d,%d,%d"), wID, fStyle, cx);
 	}
 };
 

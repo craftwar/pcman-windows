@@ -51,7 +51,7 @@ void CCustomToolBar::OnToolBarGetButtonInfo(NMHDR *pnmhdr, LRESULT *r)
 	memcpy(&nmt->tbButton, &inf->pbtns[nmt->iItem], sizeof(TBBUTTON));
 	CString str;
 	str.LoadString(inf->pbtns[nmt->iItem].idCommand);
-	strncpy(nmt->pszText, LPCTSTR(str) + 1, nmt->cchText);
+	_tcsncpy(nmt->pszText, LPCTSTR(str) + 1, nmt->cchText);
 	*r = TRUE;
 }
 

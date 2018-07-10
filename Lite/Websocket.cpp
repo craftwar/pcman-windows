@@ -110,7 +110,7 @@ void CWebsocketManager::RemoveConn()
 
 void CWebsocketManager::ServiceLoop()
 {
-	OutputDebugString("CWebsocketManager: service loop started\n");
+	OutputDebugString(TEXT("CWebsocketManager: service loop started\n"));
 	while (true) {
 		lws_service(context, 10000);
 
@@ -122,7 +122,7 @@ void CWebsocketManager::ServiceLoop()
 			}
 		}
 	}
-	OutputDebugString("CWebsocketManager: service loop ended\n");
+	OutputDebugString(TEXT("CWebsocketManager: service loop ended\n"));
 }
 
 class CWebsocket
@@ -195,10 +195,11 @@ int HandlerCallbackFunc(
 	switch (reason) {
 	case LWS_CALLBACK_OPENSSL_LOAD_EXTRA_CLIENT_VERIFY_CERTS:
 		lwsl_notice("dumb: LWS_CALLBACK_OPENSSL_LOAD_EXTRA_CLIENT_VERIFY_CERTS\n");
-		TCHAR module_path[MAX_PATH], buf[MAX_PATH];
-		if (GetModuleFileName(nullptr, module_path, sizeof(module_path) / sizeof(TCHAR)) > 0 &&
-			PathRemoveFileSpec(module_path) &&
-			PathCombine(buf, module_path, "cacert.pem")) {
+		// ANSI hack, 不用的話好像要自己load pem，太麻煩，只是path不能有非ansi字元影響不大
+		char module_path[MAX_PATH], buf[MAX_PATH];
+		if (GetModuleFileNameA(nullptr, module_path, sizeof(module_path) / sizeof(char)) > 0 &&
+			PathRemoveFileSpecA(module_path) &&
+			PathCombineA(buf, module_path, "cacert.pem")) {
 			if (!SSL_CTX_load_verify_locations((SSL_CTX *)user, buf, nullptr)) {
 				lwsl_err("SSL_CTX_load_verify_locations error\n");
 			}

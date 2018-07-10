@@ -65,7 +65,7 @@ void COtherPage::OnOK()
 
 void COtherPage::OnSetWave()
 {
-	CFileDialog dlg(TRUE, ".wav", NULL, OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, LoadString(IDS_WAV_FILTER));
+	CFileDialog dlg(TRUE, TEXT(".wav"), NULL, OFN_HIDEREADONLY | OFN_OVERWRITEPROMPT, LoadString(IDS_WAV_FILTER));
 	if (dlg.DoModal() == IDOK)
 		GetDlgItem(IDC_WAVEPATH)->SetWindowText(dlg.GetPathName());
 }

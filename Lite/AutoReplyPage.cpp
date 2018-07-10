@@ -74,8 +74,8 @@ void CAutoReplyPage::OnAdd()
 	msg.SetWindowText(NULL);
 	respond.SetWindowText(NULL);
 	protect.SetCheck(FALSE);
-	first.SetWindowText("1");
-	count.SetWindowText("1");
+	first.SetWindowText(TEXT("1"));
+	count.SetWindowText(TEXT("1"));
 	list.EnableWindow(FALSE);
 }
 
@@ -197,20 +197,20 @@ void CAutoReplyPage::UpdateDisplay()
 	msg.SetWindowText(item->msg);
 	respond.SetPasswordChar(*LPCTSTR(item->respond) == '+' ? '*' : 0);
 	CString tmp = LPCTSTR(item->respond) + 1;
-	tmp.Replace("^M^J", "\r\n");
-	tmp.Replace("^M", "\r\n");
+	tmp.Replace(TEXT("^M^J"), TEXT("\r\n"));
+	tmp.Replace(TEXT("^M"), TEXT("\r\n"));
 	respond.SetWindowText(tmp);
 	protect.SetCheck(*LPCTSTR(item->respond) == '+');
 
-	char sfirst[8];
-	itoa(item->first, sfirst, 10);
+	TCHAR sfirst[8];
+	_itot(item->first, sfirst, 10);
 	first.SetWindowText(sfirst);
-	char scount[8];
+	TCHAR scount[8];
 	if (item->count == 0)
 		count.SetWindowText(NULL);
 	else
 	{
-		itoa(item->count, scount, 10);
+		_itot(item->count, scount, 10);
 		count.SetWindowText(scount);
 	}
 }
@@ -247,21 +247,21 @@ void CAutoReplyPage::OnSave()
 	item->msg = tmp;
 
 	respond.GetWindowText(tmp);
-	tmp.Replace("\r\n", "^M");
+	tmp.Replace(TEXT("\r\n"), TEXT("^M"));
 	item->respond = protect.GetCheck() ? "+" : "-";
 	item->respond += tmp;
 
-	char sfirst[8];
+	TCHAR sfirst[8];
 	first.GetWindowText(sfirst, 8);
-	item->first = atoi(sfirst);
+	item->first = _tstoi(sfirst);
 	if (item->first < 1)
 		item->first = 1;
-	char scount[8];
+	TCHAR scount[8];
 	count.GetWindowText(scount, 8);
 	if (!*scount)
 		item->count = 0;
 	else
-		item->count = atoi(scount);
+		item->count = _tstoi(scount);
 
 	if (badd)	//如果新增
 		i = list.AddString(item->msg);

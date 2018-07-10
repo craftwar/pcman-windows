@@ -34,7 +34,7 @@ CString CAddressDlg::GetFormattedAddress() const
 	if (port == 23 || port <= 0)
 		return address;
 	CString buf;
-	buf.Format("%s:%d", LPCTSTR(address), port);
+	buf.Format(TEXT("%s:%d"), LPCTSTR(address), port);
 	return buf;
 }
 
@@ -52,7 +52,7 @@ BOOL CAddressDlg::OnInitDialog()
 {
 	CComboBox* combo = (CComboBox*)GetDlgItem(IDC_ADDRESS);
 	combo->SetWindowText(address);
-	GetDlgItem(IDC_PORT)->SetWindowText("23");
+	GetDlgItem(IDC_PORT)->SetWindowText(TEXT("23"));
 
 	POSITION pos = AppConfig.history.GetHeadPosition();
 	CString str;
@@ -108,7 +108,7 @@ void CAddressDlg::OnAddressChanged()
 	if (addr.IsValid())
 	{
 		CString port_text;
-		port_text.Format("%d", addr.Port());
+		port_text.Format(TEXT("%d"), addr.Port());
 		port_field->SetWindowText(port_text);
 	}
 }

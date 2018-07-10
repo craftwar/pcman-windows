@@ -24,8 +24,8 @@ CAES::~CAES()
 
 }
 
-
-void CAES::EnterPassword(CString passwd)
+// ANSI hack, CStringA
+void CAES::EnterPassword(CStringA passwd)
 {
 	int len = (passwd.GetLength() / 16 + (passwd.GetLength() % 16 ? 1 : 0)) * 16;
 	char pad[32];

@@ -68,7 +68,7 @@ public:
 			   esc_convert == ss.esc_convert &&
 			   text_output_conv == ss.text_output_conv &&
 			   text_input_conv == ss.text_input_conv &&
-			   !strncmp(key_map_name, ss.key_map_name, 10);
+			   !_tcsnccmp(key_map_name, ss.key_map_name, 10);
 	}
 
 	inline bool operator !=(CSiteSettings &ss)

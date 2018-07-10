@@ -18,7 +18,7 @@ static char THIS_FILE[] = __FILE__;
 
 void SaveString(CFile& file, LPCTSTR str)
 {
-	DWORD len = strlen(str) + 1;
+	DWORD len = _tcslen(str) + 1;
 	file.Write(&len, sizeof(DWORD));
 	file.Write(str, len);
 }

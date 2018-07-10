@@ -17,8 +17,8 @@ static char THIS_FILE[] = __FILE__;
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 
-const char SEPARATOR[] = "        ";
-const int SEPARATOR_LEN = 8;
+const TCHAR SEPARATOR[] = TEXT("        ");
+const int SEPARATOR_LEN = sizeof(SEPARATOR) / sizeof(*SEPARATOR);
 
 CSiteListCtrl::CSiteListCtrl()
 {

@@ -277,7 +277,7 @@ int CAutoComplete::CompareItem(const void *p1, const void *p2)
 	int r = item1->strstrpos - item2->strstrpos;
 	if (0 != r)
 		return r;
-	return strcmp(m_pOpenedList->m_pSrc->GetAt(item1->strpos),
+	return _tcscmp(m_pOpenedList->m_pSrc->GetAt(item1->strpos),
 				  m_pOpenedList->m_pSrc->GetAt(item2->strpos));
 }
 

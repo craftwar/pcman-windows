@@ -29,7 +29,7 @@ public:
 	}
 	void Save(CString& value)
 	{
-		value.Format("%d,%d,%d,%d,%d",
+		value.Format(TEXT("%d,%d,%d,%d,%d"),
 					 rect.left,
 					 rect.top,
 					 rect.right,

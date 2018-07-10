@@ -590,7 +590,7 @@ void CTelnetConn::OnText()
                     if(stamp == 2)
 					{
                         downloaded_article += GetLineWithAnsi(last_line - 2);
-                        downloaded_article.TrimRight(" ");
+                        downloaded_article.TrimRight(TEXT(" "));
                         downloaded_article += "\r\n";
                     }
 					downloaded_article += GetLineWithAnsi(last_line - 1);
@@ -600,12 +600,12 @@ void CTelnetConn::OnText()
                     if(stamp == 2)
 					{
                         downloaded_article += screen[ last_line - 2 ];
-                        downloaded_article.TrimRight(" ");
+                        downloaded_article.TrimRight(TEXT(" "));
                         downloaded_article += "\r\n";
                     }
 					downloaded_article += screen[ last_line - 1 ];
                 }
-				downloaded_article.TrimRight(" ");
+				downloaded_article.TrimRight(TEXT(" "));
 				downloaded_article += "\r\n";
 
 				if (IsEndOfArticleReached())

@@ -16,8 +16,8 @@ static char THIS_FILE[]=__FILE__;
 #define new DEBUG_NEW
 #endif
 
-#define AGENT_NAME  "CodeguruBrowser1.0"
-#define NCIKU	"http://www.nciku.com.tw"
+#define AGENT_NAME  TEXT("CodeguruBrowser1.0")
+#define NCIKU	TEXT("http://www.nciku.com.tw")
 
 CSearchPluginCollection SearchPluginCollection;
 
@@ -89,7 +89,7 @@ CString CSearchPlugin::ProcessContent(CString theContent){
 	CString returnStr = "";
 	CString tmpStr = "";
 	int counter = 0;
-	if (theContent.Find("¨Ò") > 0)
+	if (theContent.Find(TEXT("¨Ò")) > 0)
 	{
 		int startPos, endPos, deletePos, rightLength;
 		CString startStr = "<p>";
@@ -97,7 +97,7 @@ CString CSearchPlugin::ProcessContent(CString theContent){
 
 		startPos = theContent.Find(startStr) + startStr.GetLength();
 		endPos = theContent.Find(endStr);
-		deletePos = theContent.Find(".");
+		deletePos = theContent.Find(TEXT("."));
 		
 		returnStr = theContent.Left(endPos);
 		returnStr.TrimRight();
@@ -115,7 +115,7 @@ CString CSearchPlugin::ProcessContent(CString theContent){
 		int splitPos = theContent.Find(tagging);
 		CString leftStr = theContent.Left(splitPos);
 
-		splitPos = leftStr.Find("&nbsp;&nbsp;&nbsp;&nbsp;");
+		splitPos = leftStr.Find(TEXT("&nbsp;&nbsp;&nbsp;&nbsp;"));
 		leftStr = theContent.Left(splitPos);
 
 		returnStr += findHead(leftStr) + _T(" ; ");
@@ -176,7 +176,7 @@ CString CSearchPlugin::GetWebPage(const CString& theUrl)
 		{
 			//dataStore.WriteString(somecode);
 
-			if (somecode.Find("¨Ò") > 0 && ReadCounter == 0)
+			if (somecode.Find(TEXT("¨Ò")) > 0 && ReadCounter == 0)
 			{				
 				ReturnContent = somecode;
 				ReadCounter++;
@@ -184,7 +184,7 @@ CString CSearchPlugin::GetWebPage(const CString& theUrl)
 
 				break;
 			}
-			else if (somecode.Find("&nbsp;&nbsp;&nbsp;&nbsp;") > 0 && ReadCounter == 0)
+			else if (somecode.Find(TEXT("&nbsp;&nbsp;&nbsp;&nbsp;")) > 0 && ReadCounter == 0)
 			{
 				ReturnContent = somecode;
 				ReadCounter++;
@@ -341,7 +341,7 @@ CString CSearchPluginCollection::UrlForSearch(int index, CString searchTerm, boo
 		if (utf8)
 			delete []utf8Str;
 	}
-	url.Replace("{searchTerms}", encodedTerm);
+	url.Replace(TEXT("{searchTerms}"), encodedTerm);
 	TestString = encodedTerm;
 
 	return url;
@@ -351,7 +351,7 @@ CString CSearchPluginCollection::UrlForTranslate(CString searchTerm, bool utf8)
 {
 	CString url = "http://www.nciku.com.tw/search/all/{searchTerms}";
 	
-	url.Replace("{searchTerms}", searchTerm);
+	url.Replace(TEXT("{searchTerms}"), searchTerm);
 
 	return url;
 	return url;
@@ -387,6 +387,7 @@ char* CSearchPluginCollection::GetField(int index, EField f)
 		return ((CSearchPlugin*)plugins[index])->Method;
 		break;
 	}
+	// bug? should be nullptr?
 	return _T("");
 }
 
@@ -590,7 +591,7 @@ HMENU CSearchPluginCollection::CreateTranMenu(CString TextContent)
 	tran_menu = CreatePopupMenu();
 
 	AppendMenu(tran_menu, MF_STRING, ID_TRANSLATION, TextContent);
-	AppendMenu(tran_menu, MF_STRING, 0, "-");
+	AppendMenu(tran_menu, MF_STRING, 0, TEXT("-"));
 
 	return tran_menu;
 }

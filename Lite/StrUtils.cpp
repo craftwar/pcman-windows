@@ -45,7 +45,7 @@ char* strnstri(const char* str, const char* sub, int len)
 	int sl = strlen(sub);
 	for (pstr = str; pstr <= pend - sl; pstr++)
 	{
-		if (!strnicmp(pstr, sub, sl))
+		if (!_tcsncicmp(pstr, sub, sl))
 			return (char*)pstr;
 	}
 	return NULL;

@@ -914,10 +914,10 @@ void CMainFrame::OnNewConnectionAds(LPCTSTR cmdline)
 	else if (IsFileExist(cmdline))
 	{
 		// Plain path.
-		int l = strlen(cmdline);
+		int l = _tcslen(cmdline);
 		if (l > 4)
 		{
-			if (0 == strnicmp(cmdline + (l - 4), ".ans", 4))
+			if (0 == _tcsncicmp(cmdline + (l - 4), TEXT(".ans"), 4))
 			{
 				if (view.OpenAnsFile(cmdline))
 					return;
@@ -1042,7 +1042,7 @@ void CMainFrame::UpdateAddressBar()
 		address_bar.SetWindowText(view.telnet->address.URL());
 	}
 	else
-		address_bar.SetWindowText("");
+		address_bar.SetWindowText(TEXT(""));
 #endif
 
 }
@@ -1161,14 +1161,14 @@ void CMainFrame::OnSetDefaultProgram()
 
 	if (MessageBox(LoadString(IDS_SET_DEFALT_TELNET), LoadString(IDS_CONFIRM), MB_YESNO | MB_ICONQUESTION) == IDYES)
 	{
-		RegCreateKey(HKEY_CLASSES_ROOT, "telnet\\shell\\PCMan\\command", &hk);
+		RegCreateKey(HKEY_CLASSES_ROOT, TEXT("telnet\\shell\\PCMan\\command"), &hk);
 		RegSetValue(hk, NULL, REG_SZ, (LPCTSTR)cmd, cmd.GetLength());
 		RegCloseKey(hk);
-		RegSetValue(HKEY_CLASSES_ROOT, "telnet\\shell", REG_SZ, "PCMan", 5);
+		RegSetValue(HKEY_CLASSES_ROOT, TEXT("telnet\\shell"), REG_SZ, TEXT("PCMan"), 5);
 	}
 	else
 	{
-		RegSetValue(HKEY_CLASSES_ROOT, "telnet\\shell", REG_SZ, "open", 4);
+		RegSetValue(HKEY_CLASSES_ROOT, TEXT("telnet\\shell"), REG_SZ, TEXT("open"), 4);
 	}
 
 #ifdef	_COMBO_
@@ -1214,20 +1214,20 @@ void CMainFrame::OnSetDefaultProgram()
 
 	if (MessageBox(LoadString(IDS_SET_TO_DEFAULT_ANS), LoadString(IDS_CONFIRM), MB_YESNO | MB_ICONQUESTION) == IDYES)
 	{
-		RegCreateKey(HKEY_CLASSES_ROOT, ".ans", &hk);
-		RegSetValue(hk, NULL, REG_SZ, "ansfile", 7);
+		RegCreateKey(HKEY_CLASSES_ROOT, TEXT(".ans"), &hk);
+		RegSetValue(hk, NULL, REG_SZ, TEXT("ansfile"), 7);
 		RegCloseKey(hk);
-		RegCreateKey(HKEY_CLASSES_ROOT, "ansfile\\DefaultIcon", &hk);
-		RegSetValue(hk, NULL, REG_SZ, (LPCTSTR)(tmp + ",1"), tmp.GetLength() + 2);
+		RegCreateKey(HKEY_CLASSES_ROOT, TEXT("ansfile\\DefaultIcon"), &hk);
+		RegSetValue(hk, NULL, REG_SZ, (LPCTSTR)(tmp + TEXT(",1")), tmp.GetLength() + 2);
 		RegCloseKey(hk);
-		RegCreateKey(HKEY_CLASSES_ROOT, "ansfile\\Shell\\Open\\Command", &hk);
-		RegSetValue(hk, NULL, REG_SZ, (LPCTSTR)(tmp + " %1"), tmp.GetLength() + 3);
+		RegCreateKey(HKEY_CLASSES_ROOT, TEXT("ansfile\\Shell\\Open\\Command"), &hk);
+		RegSetValue(hk, NULL, REG_SZ, (LPCTSTR)(tmp + TEXT(" %1")), tmp.GetLength() + 3);
 		RegCloseKey(hk);
 	}
 	else
 	{
-		RegDeleteKey(HKEY_CLASSES_ROOT, ".ans");
-		RegDeleteKey(HKEY_CLASSES_ROOT, "ansfile");
+		RegDeleteKey(HKEY_CLASSES_ROOT, TEXT(".ans"));
+		RegDeleteKey(HKEY_CLASSES_ROOT, TEXT("ansfile"));
 	}
 
 	SHChangeNotify(SHCNE_ASSOCCHANGED, SHCNF_IDLIST | SHCNF_FLUSHNOWAIT, NULL, NULL);
@@ -2821,7 +2821,7 @@ void CMainFrame::AddToHistory(CString address)
 
 void CMainFrame::LoadBBSFavorites()
 {
-	char title[64];
+	TCHAR title[64];
 	GetMenuString(main_menu, 3, title, 32, MF_BYPOSITION);
 	AppConfig.favorites.LoadFavorites(bbs_fav_menu, 's');
 	ModifyMenu(main_menu, 3, MF_BYPOSITION | MF_STRING | MF_POPUP, (UINT)bbs_fav_menu, title);
@@ -3532,7 +3532,7 @@ void CMainFrame::OnNciku()
 #if defined _COMBO_
 	((CMainFrame*)AfxGetApp()->m_pMainWnd)->view.ConnectWeb(tmp, TRUE);
 #else
-	ShellExecute(m_hWnd, "open", tmp.URL(), NULL, NULL, SW_SHOWMAXIMIZED);
+	ShellExecute(m_hWnd, TEXT("open"), tmp.URL(), NULL, NULL, SW_SHOWMAXIMIZED);
 #endif
 }
 
@@ -3555,7 +3555,7 @@ void CMainFrame::OnWikipedia()
 #if defined _COMBO_
 	((CMainFrame*)AfxGetApp()->m_pMainWnd)->view.ConnectWeb(tmp, TRUE);
 #else
-	ShellExecute(m_hWnd, "open", tmp.URL(), NULL, NULL, SW_SHOWMAXIMIZED);
+	ShellExecute(m_hWnd, TEXT("open"), tmp.URL(), NULL, NULL, SW_SHOWMAXIMIZED);
 #endif
 }
 
@@ -3766,7 +3766,7 @@ void CMainFrame::OnHelp()
 	view.ConnectWeb(CAddress("http://pcman.ptt.cc/pcman_help.html"), TRUE);
 #else
 //	if((long)ShellExecute(m_hWnd,"open",AppPath+"pcman.html",NULL,NULL,SW_SHOWMAXIMIZED)<=32)
-	ShellExecute(m_hWnd, "open", "http://pcman.ptt.cc/pcman_help.html", NULL, NULL, SW_SHOWMAXIMIZED);
+	ShellExecute(m_hWnd, TEXT("open"), TEXT("http://pcman.ptt.cc/pcman_help.html"), NULL, NULL, SW_SHOWMAXIMIZED);
 #endif
 }
 
@@ -4013,7 +4013,7 @@ LRESULT CMainFrame::OnDownloadPage(WPARAM, LPARAM)
 #ifdef	_COMBO_
 	((CMainFrame*)AfxGetApp()->GetMainWnd())->view.ConnectWeb(url, TRUE);
 #else
-	ShellExecute(m_hWnd, "open", url.URL(), NULL, NULL, SW_SHOW);
+	ShellExecute(m_hWnd, TEXT("open"), url.URL(), NULL, NULL, SW_SHOW);
 #endif
 	return 0;
 }
@@ -4026,7 +4026,7 @@ void CMainFrame::OnInitMenuPopup(CMenu* pMenu,UINT nIndex,BOOL bSysMenu)
 		int c = pMenu->GetMenuItemCount();
 		CString text,result;
 		pMenu->GetMenuString(1,text,MF_BYPOSITION);
-		if(strlen(text)==0||text[0] != '-')
+		if(text.GetLength()==0 || text[0] != '-')
 			return;
 		
 		pMenu->GetMenuString(0,text,MF_BYPOSITION);

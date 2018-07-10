@@ -194,7 +194,7 @@ bool CConfigFile::DoSave(ConfigTable table)
 		CString str, esc_str;
 		for (; table->name; table++)
 		{
-			str.Format("[%s]\r\n", table->name);
+			str.Format(TEXT("[%s]\r\n"), table->name);
 			file.Write(LPCTSTR(str), str.GetLength());
 
 			if (table->type == VT_CUSTOM_SECT)
@@ -209,7 +209,8 @@ bool CConfigFile::DoSave(ConfigTable table)
 			else
 				cur_sect = (ConfigEntry*)table->data;
 
-			char strval[64];	const char* pstrval;
+			char strval[64];
+			const char* pstrval;
 			for (; cur_sect->name; cur_sect++)
 			{
 				pstrval = strval;
@@ -256,7 +257,7 @@ bool CConfigFile::DoSave(ConfigTable table)
 					}
 					break;
 				}
-				str.Format("%s=%s\r\n", cur_sect->name, pstrval);
+				str.Format(TEXT("%s=%s\r\n"), cur_sect->name, pstrval);
 				file.Write(LPCTSTR(str), str.GetLength());
 			}
 			file.Write("\r\n", 2);

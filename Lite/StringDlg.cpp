@@ -418,7 +418,7 @@ void CStringDlg::OnListGetDispInfo(NMHDR* pNMHDR, LRESULT* pResult)
 	LV_DISPINFO* pdi = (LV_DISPINFO*)pNMHDR;
 	pdi->item.mask = LVIF_TEXT;
 	if (pdi->item.iSubItem == 0 && stra)
-		pdi->item.pszText = LPSTR(LPCTSTR(stra->ElementAt(pdi->item.iItem)));
+		pdi->item.pszText = LPTSTR(LPCTSTR(stra->ElementAt(pdi->item.iItem)));
 	else if (pdi->item.iSubItem == 1)
 	{
 		DWORD dwinf = stra->inf.ElementAt(pdi->item.iItem);
@@ -483,7 +483,7 @@ void CStringDlg::OnRenamePage()
 	CInputNameDlg dlg;
 	int i = tab.GetCurSel();
 	TCITEM item;
-	char buf[64];
+	TCHAR buf[64];
 	item.mask = TCIF_TEXT;
 	item.pszText = buf;
 	item.cchTextMax = 64;
@@ -491,7 +491,7 @@ void CStringDlg::OnRenamePage()
 	dlg.name = buf;
 	if (dlg.DoModal() == IDOK)
 	{
-		item.pszText = (LPSTR)(LPCTSTR)dlg.name;
+		item.pszText = (LPTSTR)(LPCTSTR)dlg.name;
 		tab.SetItem(i, &item);
 
 		data_changed = TRUE;
@@ -530,7 +530,7 @@ void CStringDlg::OnDeltaPosPageSpin(NMHDR* pNMHDR, LRESULT* pResult)
 	if (i2 >= tab.GetItemCount() || i2 < 0)
 		return;
 	TCITEM item, item2;
-	char buf[64], buf2[64];
+	TCHAR buf[64], buf2[64];
 	item.mask = item2.mask = TCIF_TEXT | TCIF_PARAM;
 	item.pszText = buf;
 	item2.pszText = buf2;
@@ -621,7 +621,7 @@ void CStringDlg::LoadList()
 		for (int p = 0;p < tc;p++)
 		{
 			CString tmp = LoadString(f);
-			item.pszText = (LPSTR)(LPCTSTR)tmp;	//Add Page
+			item.pszText = (LPTSTR)(LPCTSTR)tmp;	//Add Page
 			stra = new MyStringArray;
 			item.lParam = (LPARAM)stra;
 			tab.InsertItem(p, &item);

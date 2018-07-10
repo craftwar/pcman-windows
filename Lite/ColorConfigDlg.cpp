@@ -43,7 +43,7 @@ void CColorConfigDlg::OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct)
 {
 	COLORREF clr = colormap[nIDCtl-5];
 	CDC dc;
-	char txt[10];
+	TCHAR txt[10];
 	dc.Attach(lpDrawItemStruct->hDC);
 	CRect rc;
 	::GetClientRect(lpDrawItemStruct->hwndItem, &rc);

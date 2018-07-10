@@ -188,7 +188,7 @@ void CBBSHyperLink::OpenURL(LPCTSTR url)
 			((CMainFrame*)AfxGetApp()->m_pMainWnd)->view.ConnectWeb(CAddress(url), AppConfig.link_autoswitch);
 		else
 #endif
-			::ShellExecute(AfxGetMainWnd()->m_hWnd, "open", path, param, NULL,
+			::ShellExecute(AfxGetMainWnd()->m_hWnd, TEXT("open"), path, param, NULL,
 						   AppConfig.link_autoswitch ? SW_SHOWMAXIMIZED : SW_SHOWMINIMIZED);
 	}
 }

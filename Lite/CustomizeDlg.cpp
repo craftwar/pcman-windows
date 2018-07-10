@@ -303,7 +303,7 @@ void CCustomizeDlg::OnSelChanged(NMHDR* pNMHDR, LRESULT* pResult)
 	{
 		CString text = tree.GetItemText(item);
 		int p = text.Find('&');
-		char a[] = {0, 0};
+		TCHAR a[] = {0, 0};
 		if (p != -1)	*a = text[p+1];
 		hkedit2.SetWindowText(a);
 		if (data->type & CT_HAS_SUB)
@@ -349,7 +349,7 @@ void CCustomizeDlg::OnSelChanged(NMHDR* pNMHDR, LRESULT* pResult)
 
 LRESULT CALLBACK CCustomizeDlg::HotkeyEdit2Proc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 {
-	char a[] = {0, 0};
+	TCHAR a[] = {0, 0};
 	if (msg == WM_CHAR)
 	{
 		if (isalnum(wparam))
@@ -380,7 +380,7 @@ void CCustomizeDlg::UpdateItemDisplay(HTREEITEM item)
 	int p;
 	if ((p = text.Find('\t')) != -1)
 		text = text.Left(p);
-	char a[] = " (&A)", _a[2];
+	TCHAR a[] = TEXT(" (&A)"), _a[2];
 	hkedit2.GetWindowText(_a, 2);
 
 	HotkeyData* hkitem = (HotkeyData*)tree.GetItemData(item);

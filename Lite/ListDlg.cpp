@@ -114,7 +114,7 @@ void CListDlg::OnOK()
 			view->parent->LoadWebFavorites();
 #endif
 		}
-		str.Replace(SEPARATOR, "\t");
+		str.Replace(SEPARATOR, TEXT("\t"));
 		view->ConnectStr('s' + str, dir);
 		CDialog::OnOK();
 	}
@@ -356,11 +356,11 @@ void CListDlg::OnEditSite()
 	{
 		CInputNameDlg dlg(this);
 		dlg.name = sites.GetItemText(item);
-		dlg.name.Replace(SEPARATOR, "\t");
+		dlg.name.Replace(SEPARATOR, TEXT("\t"));
 		if (dlg.DoModal() == IDOK)
 		{
 			CString tmp = dlg.name;
-			tmp.Replace("\t", SEPARATOR);
+			tmp.Replace(TEXT("\t"), SEPARATOR);
 			sites.SetItemText(item, dlg.name);
 			sites.changed = TRUE;
 		}

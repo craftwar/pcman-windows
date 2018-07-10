@@ -116,7 +116,7 @@ CString GetIEPath()
 	HKEY hk = NULL;
 //	RegOpenKey( HKEY_LOCAL_MACHINE, "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\IEXPLORE.EXE", &hk );
 //	RegQueryValue( hk, NULL, fpath.GetBuffer(_MAX_PATH), &len);
-	RegQueryValue(HKEY_LOCAL_MACHINE, "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\IEXPLORE.EXE", fpath.GetBuffer(_MAX_PATH), &len);
+	RegQueryValue(HKEY_LOCAL_MACHINE, TEXT("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\App Paths\\IEXPLORE.EXE"), fpath.GetBuffer(_MAX_PATH), &len);
 //	RegCloseKey( hk );
 	fpath.ReleaseBuffer();
 	return fpath;

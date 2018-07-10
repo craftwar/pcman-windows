@@ -22,7 +22,7 @@ public:
 
 inline BOOL CClipboard::SetText(HWND owner, LPCTSTR str)
 {
-	return SetText(owner, str, strlen(str));
+	return SetText(owner, str, _tcslen(str));
 }
 
 inline BOOL CClipboard::SetTextW(HWND owner, const wchar_t* str)

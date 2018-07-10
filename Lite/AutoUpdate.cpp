@@ -24,7 +24,7 @@ static char THIS_FILE[]=__FILE__;
 CAutoUpdater::CAutoUpdater()
 {
 	// Initialize WinInet
-	hInternet = InternetOpen("AutoUpdateAgent", INTERNET_OPEN_TYPE_PRECONFIG, NULL, NULL, 0);	
+	hInternet = InternetOpen(TEXT("AutoUpdateAgent"), INTERNET_OPEN_TYPE_PRECONFIG, NULL, NULL, 0);	
 }
 
 CAutoUpdater::~CAutoUpdater()
@@ -144,7 +144,7 @@ CAutoUpdater::ErrorType CAutoUpdater::CheckForUpdate()
 //	}	
 
     MessageBox(AfxGetMainWnd()->m_hWnd, LoadString(IDS_INSTALL_UPDATE), LoadString(IDS_PCMAN_CLOSE), MB_ICONINFORMATION|MB_OK);
-	if (!::ShellExecute(AfxGetMainWnd()->m_hWnd, "open", updateFileLocation, NULL, NULL,
+	if (!::ShellExecute(AfxGetMainWnd()->m_hWnd, TEXT("open"), updateFileLocation, NULL, NULL,
 						   SW_SHOWNORMAL))
 	{
 		return UpdateNotComplete;
@@ -325,7 +325,7 @@ int CAutoUpdater::CompareVersions(CString ver1, CString ver2)
 	}
 
 	// Get version 1 to DWORDs
-	TCHAR *pToken = strtok(pVer1, _T("."));
+	TCHAR *pToken = _tcstok(pVer1, _T("."));
 	if (pToken == NULL)
 	{
 		return -21;
@@ -338,14 +338,14 @@ int CAutoUpdater::CompareVersions(CString ver1, CString ver2)
 		{			
 			return -21;	// Error in structure, too many parameters
 		}		
-		wVer1[i] = atoi(pToken);
-		pToken = strtok(NULL, _T("."));
+		wVer1[i] = _tstoi(pToken);
+		pToken = _tcstok(NULL, _T("."));
 		i--;
 	}
 	ver1.ReleaseBuffer();
 
 	// Get version 2 to DWORDs
-	pToken = strtok(pVer2, _T("."));
+	pToken = _tcstok(pVer2, _T("."));
 	if (pToken == NULL)
 	{
 		return -22;
@@ -358,8 +358,8 @@ int CAutoUpdater::CompareVersions(CString ver1, CString ver2)
 		{
 			return -22;	// Error in structure, too many parameters
 		}		
-		wVer2[i] = atoi(pToken);
-		pToken = strtok(NULL, _T("."));
+		wVer2[i] = _tstoi(pToken);
+		pToken = _tcstok(NULL, _T("."));
 		i--;
 	}
 	ver2.ReleaseBuffer();

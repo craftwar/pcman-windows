@@ -43,7 +43,7 @@ LRESULT CCtrlEdit::OnPaste(WPARAM w, LPARAM l)
 		if (strstr(data, "\x1b["))	//如果含有色彩控制碼
 		{
 			CString tmp = data;
-			tmp.Replace("\x1b[", "^[[");
+			tmp.Replace(TEXT("\x1b["), TEXT("^[["));
 			ReplaceSel(tmp, FALSE);
 			CStringDlg* pdlg = (CStringDlg*)GetParent();
 			if (pdlg)

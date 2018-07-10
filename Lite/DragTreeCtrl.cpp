@@ -240,15 +240,16 @@ void CDragTreeCtrl::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 
 HTREEITEM CDragTreeCtrl::PathToItem(LPCTSTR path, HTREEITEM root, TCHAR separator)
 {
-	static char* path_buf = 0;
+	static TCHAR* path_buf = nullptr;
 	if (!path_buf)
 	{
-		int l = strlen(path) + 1;
-		path_buf = new char[l];
-		memcpy(path_buf, path, l);
+		int l = _tcslen(path) + 1;
+		path_buf = new TCHAR[l];
+		memcpy(path_buf, path, sizeof(path_buf));
 		path = path_buf;
 	}
 
+	// Need Unicode Fix below
 	HTREEITEM item;	LPSTR pch;
 	for (pch = LPSTR(path) ; *pch; pch = CharNextExA(CP_ACP, pch, 0))
 	{
@@ -266,7 +267,7 @@ HTREEITEM CDragTreeCtrl::PathToItem(LPCTSTR path, HTREEITEM root, TCHAR separato
 		return PathToItem(pch + 1, item, separator);
 
 	delete []path_buf;
-	path_buf = NULL;
+	path_buf = nullptr;
 	return item;
 }
 

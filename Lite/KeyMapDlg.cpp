@@ -103,7 +103,7 @@ void CKeyMapDlg::OnOK()
 		DWORD inf = list.GetItemData(i);
 		ent.key = LOWORD(inf);
 		ent.fVirt = (BYTE)HIWORD(inf);
-		strncpy(ent.str, UnescapeControlChars(str), 12);
+		_tcsncpy(ent.str, UnescapeControlChars(str), 12);
 		pmap->Add(ent);
 	}
 	pmap->FreeExtra();
@@ -241,7 +241,7 @@ void CKeyMapDlg::OnSavekey()
 				MessageBox(LoadString(IDS_SPECIFIED_KEY_EXISTS) , LoadString(IDS_ERR), MB_ICONSTOP | MB_OK);
 				return;
 			}
-		sel = list.InsertItem(0, "");
+		sel = list.InsertItem(0, TEXT(""));
 	}
 	else	//Modify
 		sel = (int)list.GetFirstSelectedItemPosition() - 1;

@@ -133,7 +133,7 @@ CFont fnt;
 CAddress AnsiAddressFromPath(const CString& path)
 {
 	CString url;
-	url.Format("file://%s", path);
+	url.Format(TEXT("file://%s"), path);
 	return CAddress(url);
 }
 

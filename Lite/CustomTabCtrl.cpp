@@ -102,7 +102,7 @@ void CCustomTabCtrl::OnLButtonUp(UINT nFlags, CPoint point)
 			*/
 			CString txt = oldc->name;
 			item.mask |= TCIF_TEXT;
-			item.pszText = (LPSTR)(LPCTSTR)txt;
+			item.pszText = (LPTSTR)(LPCTSTR)txt;
 			InsertItem(newsel, &item);
 
 			/*			if(newsel>0)	//如果插入後不是第一項,有前一項
@@ -223,8 +223,8 @@ BOOL CCustomTabCtrl::InsertItem(int nItem, TCITEM* pTabCtrlItem)
 		return CTabCtrl::InsertItem(nItem, pTabCtrlItem);
 
 	CString name;
-	name.Format("%d.%s", nItem + 1, pTabCtrlItem->pszText);
-	pTabCtrlItem->pszText = (LPSTR)(LPCTSTR)name;
+	name.Format(TEXT("%d.%s"), nItem + 1, pTabCtrlItem->pszText);
+	pTabCtrlItem->pszText = (LPTSTR)(LPCTSTR)name;
 	r = CTabCtrl::InsertItem(nItem, pTabCtrlItem);
 	UpdateNumberFrom(nItem);
 
@@ -242,7 +242,7 @@ BOOL CCustomTabCtrl::InsertItem(UINT nMask, int nItem, LPCTSTR lpszItem, int nIm
 {
 	TCITEM item;
 	item.mask = nMask;
-	item.pszText = (LPSTR)lpszItem;
+	item.pszText = (LPTSTR)lpszItem;
 	item.iImage = nImage;
 	item.lParam = lParam;
 	nItem = InsertItem(nItem, &item);
@@ -262,11 +262,11 @@ void CCustomTabCtrl::UpdateNumberFrom(int idx)
 		CString name;
 		if (addnum)
 		{
-			name.Format("%d.%s", c, telnet->name);
-			item.pszText = (LPSTR)(LPCTSTR)name;
+			name.Format(TEXT("%d.%s"), c, telnet->name);
+			item.pszText = (LPTSTR)(LPCTSTR)name;
 		}
 		else
-			item.pszText = (LPSTR)(LPCTSTR)telnet->name;
+			item.pszText = (LPTSTR)(LPCTSTR)telnet->name;
 
 		item.mask = TCIF_TEXT;
 		SetItem(c - 1, &item);
@@ -293,7 +293,8 @@ void CCustomTabCtrl::DrawItem(LPDRAWITEMSTRUCT lpds)
 
 	DWORD style = GetStyle();
 
-	TCITEM item;	char text[100];
+	TCITEM item;
+	TCHAR text[100];
 	item.mask = TCIF_IMAGE | TCIF_TEXT;
 	item.pszText = text;	item.cchTextMax = 100;
 	GetItem(lpds->itemID, &item);
@@ -360,14 +361,15 @@ void CCustomTabCtrl::DrawItem(LPDRAWITEMSTRUCT lpds)
 //#if defined(_COMBO_)
 //	lpds->rcItem.right-=3;
 //#endif
-	dc.DrawText(text, strlen(text), &lpds->rcItem, DT_SINGLELINE | DT_END_ELLIPSIS);
+	dc.DrawText(text, _tcslen(text), &lpds->rcItem, DT_SINGLELINE | DT_END_ELLIPSIS);
 	dc.Detach();
 }
 
 
 CImageList* CCustomTabCtrl::CreateDragImage(int i)
 {
-	TCITEM item;	char text[100];
+	TCITEM item;
+	TCHAR text[100];
 	item.mask = TCIF_IMAGE | TCIF_TEXT;
 	item.pszText = text;	item.cchTextMax = 100;
 	GetItem(i, &item);
@@ -380,7 +382,7 @@ CImageList* CCustomTabCtrl::CreateDragImage(int i)
 //	Begin Paint
 
 	CRect rc;	rc.top = rc.left = 0;
-	int l = strlen(item.pszText);
+	int l = _tcslen(item.pszText);
 	DrawText(memdc, item.pszText, l, rc, DT_LEFT | DT_SINGLELINE | DT_CALCRECT);
 	HBITMAP bmp = CreateCompatibleBitmap(hdc, rc.right + 20, rc.bottom);
 	img->Create(rc.right + 20, rc.bottom, ILC_COLOR32 | ILC_MASK, 1, 0);
@@ -416,9 +418,9 @@ void CCustomTabCtrl::SetItemText(int i, CString Text)
 {
 	TCITEM item;	item.mask = TCIF_TEXT;	CString Title;
 	if (AppConfig.tab_add_number)
-		Title.Format("%d.%.12s", i + 1, Text);
+		Title.Format(TEXT("%d.%.12s"), i + 1, Text);
 	else
 		Title = Text.Left(12);
-	item.pszText = (LPSTR)(LPCTSTR)Title;
+	item.pszText = (LPTSTR)(LPCTSTR)Title;
 	SetItem(i, &item);
 }
